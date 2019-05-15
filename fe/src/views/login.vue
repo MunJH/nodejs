@@ -57,6 +57,7 @@ export default {
           alert('이메일과 비밀번호가 일치하지 않습니다.')
           else{
           alert('로그인 완료')
+          location.replace("home")
         }
       }
       // 그 유저의 비밀번호와 입력된 비밀번호를 비교한다.
