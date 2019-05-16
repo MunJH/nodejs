@@ -10,13 +10,7 @@
       app
     >
       <v-list>
-        <v-list-tile
-          value="true"
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-
-        >
+        <v-list-tile value="true" v-for="(item, i) in items" :key="i" :to="item.to">
           <v-list-tile-action>
             <v-icon v-html="item.icon"></v-icon>
           </v-list-tile-action>
@@ -26,10 +20,7 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar
-      app
-      :clipped-left="clipped"
-    >
+    <v-toolbar app :clipped-left="clipped">
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-btn icon @click.stop="miniVariant = !miniVariant">
         <v-icon v-html="miniVariant ? 'chevron_right' : 'chevron_left'"></v-icon>
@@ -49,13 +40,7 @@
     <v-content>
       <router-view/>
     </v-content>
-    <v-navigation-drawer
-      temporary
-      :right="right"
-      v-model="rightDrawer"
-      fixed
-      app
-    >
+    <v-navigation-drawer temporary :right="right" v-model="rightDrawer" fixed app>
       <v-list>
         <v-list-tile @click="right = !right">
           <v-list-tile-action>
@@ -72,46 +57,45 @@
 </template>
 
 <script>
-
 export default {
-  name: 'App',
-  data () {
+  name: "App",
+  data() {
     return {
       clipped: false,
       drawer: true,
       fixed: false,
       items: [
         {
-          icon: 'home',
-          title: '홈',
-          to: '/'
+          icon: "home",
+          title: "홈",
+          to: "/"
         },
         {
-          icon: 'face',
-          title: '사용자관리',
-          to: '/user'
+          icon: "face",
+          title: "사용자관리",
+          to: "/user"
         },
         {
-          icon: 'face',
-          title: 'RestFul',
-          to: '/REST'
+          icon: "face",
+          title: "RestFul",
+          to: "/REST"
         },
         {
-          icon: 'face',
-          title: 'login',
-          to: '/login'
+          icon: "face",
+          title: "login",
+          to: "/login"
         },
         {
-          icon: 'face',
-          title: '회원가입',
-          to: '/signup'
+          icon: "face",
+          title: "회원가입",
+          to: "/signup"
         }
       ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Vuetify.js'
-    }
+      title: "Vuetify.js"
+    };
   }
-}
+};
 </script>

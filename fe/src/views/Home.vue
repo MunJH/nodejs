@@ -2,15 +2,6 @@
   <v-container fluid>
     <v-slide-y-transition mode="out-in">
       <v-layout column align-center>
-        <img src="@/assets/logo.png" alt="Vuetify.js" class="mb-5">
-        <blockquote>
-          &#8220;First, solve the problem. Then, write the code.&#8221;
-          <footer>
-            <small>
-              <em>&mdash;John Johnson</em>
-            </small>
-          </footer>
-        </blockquote>
         <v-dialog v-model="dialog" width="500">
           <template v-slot:activator="{ on }">
             <v-btn color="red lighten-2" dark v-on="on">로그인 버튼</v-btn>
@@ -26,11 +17,6 @@
               </div>
             </v-card>
             <v-divider></v-divider>
-
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="primary" flat @click="dialog = false">I accept</v-btn>
-            </v-card-actions>
           </v-card>
         </v-dialog>
       </v-layout>
@@ -38,6 +24,53 @@
   </v-container>
 </template>
 
+<script>
+import axios from "axios";
+export default {
+  data() {
+    return {
+      email: null,
+      password: null,
+      allUsers: []
+    };
+  },
+  mounted() {
+    this.getUsers();
+  },
+  methods: {
+    login() {
+      // 전체 유저에서 해당 이메일로 유저를 찾는다.
+      let selectUser = null;
+      this.allUsers.forEach(user => {
+        if (user.email === this.email) selectUser = user;
+      });
+
+      if (selectUser) {
+        if (selectUser.password == this.password) {
+          alert("로그인 완료.");
+          location.replace("/");
+        } else {
+          alert("이메일과 비밀번호가 일치하지 않습니다.");
+        }
+      } else {
+        alert("존재하지 않는 계정입니다.");
+      }
+      // 그 유저의 비밀번호와 입력된 비밀번호를 비교한다.
+    },
+    getUsers() {
+      axios
+        .get("http://localhost:3000/api/user")
+        .then(r => {
+          this.allUsers = r.data.users;
+          console.log(r);
+        })
+        .catch(e => {
+          console.error(e.message);
+        });
+    }
+  }
+};
+</script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h1,
