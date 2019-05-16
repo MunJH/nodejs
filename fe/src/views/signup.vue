@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   data() {
     return {
@@ -25,21 +26,23 @@ export default {
   },
   methods: {
     signup() {
-      axios
-        .post("http://localhost:3000/api/user", {
+      axios.post("http://localhost:3000/api/user", {
           email: this.email,
           password: this.password
-          // user: 'postMan'
-        })
-        .then(r => {
-          this.pop("사용자 등록 완료");
-          this.getUsers(); // 데이터갱신
-        })
-        .catch(e => {
-          console.error(e.message);
-          this.pop("e.message");
-        });
-    }
+      })
+      .then(r => {
+        if (r.success) {
+          alert("회원가입을 축하합니다.");
+        }
+        else {
+          alert("회원가입 실패.");
+        }
+      })
+      .catch(e => {
+        console.error(e.message);
+        alert(e.message);
+      });
+    },
   }
 };
 </script>

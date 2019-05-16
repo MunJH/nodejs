@@ -39,20 +39,18 @@ module.exports = router;
 });
 
 router.post('/', (req, res, next) => {
+  const {email, password} = req.body;
 
-  const { name, age } = req.body
-  const u = new User({ name, age })
-    u.save()
-      .then(r => {
-        res.send({ success: true, msg: r })
-      })
-      .catch(e => {
-        res.send({ success: false, msg: e.message })
-      })
+  const u = new User({email, password});
 
-  // console.log(req.query)
-  // console.log(req.body)
-  // res.send({ success: true, msg: 'post ok' })
+  u.save()
+  .then(r => {
+    res.send({success: true, msg: r});
+  })
+  .catch(e => {
+    console.error(e.message);
+    res.send({success: false, msg: e.message});
+  });
 })
 
 router.put('/:id', (req, res, next) => {
