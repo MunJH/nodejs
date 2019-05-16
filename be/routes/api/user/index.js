@@ -39,9 +39,9 @@ module.exports = router;
 });
 
 router.post('/', (req, res, next) => {
-  const {email, password} = req.body;
+  const {email, password, name, age} = req.body;
 
-  const u = new User({email, password});
+  const u = new User({email, password, name, age});
 
   u.save()
   .then(r => {
