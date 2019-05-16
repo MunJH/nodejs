@@ -2,28 +2,12 @@
   <v-container fill-height>
     <v-layout row wrap align-center>
       <v-flex xs12>
-        <v-toolbar flat>
-       </v-toolbar>
+        <v-toolbar flat></v-toolbar>
         <v-card>
           <div class="pa-3">
-            <v-text-field
-                v-model="email"
-                label="임시id"
-
-            >
-            </v-text-field>
-            <v-text-field
-                v-model="password"
-                label="임시pw"
-                type="password"
-            >
-            </v-text-field>
-            <v-btn
-             large
-             block
-             color="primary"
-             @click="login()"
-            >회원가입</v-btn>
+            <v-text-field v-model="email" label="임시id"></v-text-field>
+            <v-text-field v-model="password" label="임시pw" type="password"></v-text-field>
+            <v-btn large block color="primary" @click="signup()">회원가입</v-btn>
           </div>
         </v-card>
       </v-flex>
@@ -33,34 +17,29 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       email: null,
-      password: null,
-      allUsers: [
-        {id:1, name: 'genie', email:'genie@geniesoft.io', password:'12345'},
-        {id:2, name: 'test', email:'test@geniesoft.io', password:'12345'}
-      ]
-    }
+      password: null
+    };
   },
   methods: {
-    login() {
-      // 전체 유저에서 해당 이메일로 유저를 찾는다.
-      let selectUser = null
-      this.allUsers.forEach(user =>{
-        if(user.email === this.email) selectUser = user
-      })
-      if (selectUser === null) alert('입력하신 이메일이 없습니다')
-        else{
-        if(selectUser.password !== this.password)
-          alert('이메일과 비밀번호가 일치하지 않습니다.')
-          else{
-          alert('로그인 완료')
-        }
-      }
-      // 그 유저의 비밀번호와 입력된 비밀번호를 비교한다.
-      console.log(this.email, this.password)
+    signup() {
+      axios
+        .post("http://localhost:3000/api/user", {
+          email: this.email,
+          password: this.password
+          // user: 'postMan'
+        })
+        .then(r => {
+          this.pop("사용자 등록 완료");
+          this.getUsers(); // 데이터갱신
+        })
+        .catch(e => {
+          console.error(e.message);
+          this.pop("e.message");
+        });
     }
   }
-}
+};
 </script>

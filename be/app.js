@@ -10,7 +10,9 @@ var app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({
+  extended: false
+}));
 app.use(cookieParser());
 
 app.use(cors()) // api 위에서 사용하겠다고 선언
@@ -21,19 +23,21 @@ app.use(express.static(path.join(__dirname, '../', 'fe', 'dist')));
 
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
   res.status(err.status || 500);
-  res.send({ msg: err.message })
+  res.send({
+    msg: err.message
+  })
 });
 
 module.exports = app;
@@ -62,25 +66,38 @@ const User = require('./models/users')
 
 // 데이터 스키마 설정
 // const userSchema = new mongoose.Schema({
-//    name: { type: String, default: '', unique: true, index: true },
-//    age: { type: Number, default: 1 }
-//  })
-//
+//   email: {
+//     type: String,
+//     default: '',
+//     unique: true,
+//     index: true
+//   },
+//   password: {
+//     type: Number,
+//     default: 1
+//   }
+// })
+
 // const User = mongoose.model('User', userSchema)
 
-mongoose.connect('mongodb://localhost:27017/local', { useNewUrlParser: true }, (err) => {
-   if (err) return console.error(err)
-   console.log('mongoose connected!')
+mongoose.connect('mongodb://localhost:27017/local', {
+  useNewUrlParser: true
+}, (err) => {
+  if (err) return console.error(err)
+  console.log('mongoose connected!')
 
-   // //쓰기
-   // User.create({ name: '하하' })
-   //     .then(r => console.log(r))
-   //      .catch(e => console.error(e))
+  //쓰기
+  // User.create({
+  //     email: 'sibal6974',
+  //     password: "se"
+  //   })
+  //   .then(r => console.log(r))
+  //   .catch(e => console.error(e))
 
-   //읽기
-   // User.find()
-   //      .then(r => console.log(r))
-   //      .catch(e => console.error(e))
+  //읽기
+  // User.find()
+  //   .then(r => console.log(r))
+  //   .catch(e => console.error(e))
 
   // 업데이트(수정)
   // User.updateOne({ _id: '5cbd50967c00ec110c8d7912' }, { $set: { age: 27 } })
