@@ -5,9 +5,17 @@
         <v-toolbar flat></v-toolbar>
         <v-card>
           <div class="pa-3">
-            <v-text-field v-model="email" label="임시id"></v-text-field>
-            <v-text-field v-model="password" label="임시pw" type="password"></v-text-field>
-            <v-btn large block color="primary" @click="signup()">회원가입</v-btn>
+          <v-form
+            ref="form"
+            v-model="valid"
+            lazy-validation
+          >
+            <v-text-field v-model="email" label="임시id" :rules="emailRules" required></v-text-field>
+            <v-text-field v-model="password" label="임시pw" type="password" :rules="pwRules" required></v-text-field>
+            <v-text-field v-model="name" label="키미노나마에와" :rules="nameRules" required></v-text-field>
+            <v-select v-model="age" :items="items" :rules="[v => !!v || 'Item is required']" label="나이" required ></v-select>
+            <v-btn :disabled="!valid" large block color="primary" @click="signup()">회원가입</v-btn>
+          </v-form>
           </div>
         </v-card>
       </v-flex>
@@ -20,9 +28,28 @@ import axios from 'axios'
 export default {
   data() {
     return {
+      valid: true,
       email: null,
-      password: null
+      password: null,
+      pwRules: [
+        v => !!v || 'Password is required',
+        v =>  /([a-zA-Z0-9].*[!,@,#,$,%,^,&,*,?,_,~])|([!,@,#,$,%,^,&,*,?,_,~].*[a-zA-Z0-9])/.test(v) || '대소문자 숫자 *특수기호* (4~12)' 
+      ],
+      name: '',
+      nameRules: [
+        v => !!v || 'Name is required',
+        v => (v && v.length <= 10) || 'Name must be less than 10 characters'
+      ],
+      emailRules: [
+        v => !!v || 'E-mail is required',
+        v => /.+@.+[.].+/.test(v) || 'E-mail must be valid'
+      ],
+      select: null,
+      items: []
     };
+  },
+  mounted () {
+    for (let i = 10; i < 40; i++) this.items.push(i)
   },
   methods: {
     signup() {

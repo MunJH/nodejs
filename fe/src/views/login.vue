@@ -56,6 +56,7 @@ export default {
       if (selectUser) {
         if (selectUser.password == this.password) {
           alert("로그인 완료.");
+          location.replace('Home')
         }
         else {
           alert("이메일과 비밀번호가 일치하지 않습니다.")
