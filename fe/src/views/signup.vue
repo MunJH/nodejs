@@ -31,7 +31,7 @@ export default {
           password: this.password
       })
       .then(r => {
-        if (r.success) {
+        if (r.data.success) {
           alert("회원가입을 축하합니다.");
         }
         else {

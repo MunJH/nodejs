@@ -53,8 +53,6 @@ export default {
         if (user.email === this.email) selectUser = user;
       })
 
-      console.log(selectUser);
-
       if (selectUser) {
         if (selectUser.password == this.password) {
           alert("로그인 완료.");
