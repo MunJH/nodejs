@@ -12,7 +12,7 @@
           >
             <v-text-field v-model="email" label="임시id" :rules="emailRules" required></v-text-field>
             <v-text-field v-model="password" label="임시pw" type="password" :rules="pwRules" required></v-text-field>
-            <v-text-field v-model="name" label="키미노나마에와" :rules="nameRules" required></v-text-field>
+            <v-text-field v-model="name" label="이름" :rules="nameRules" required></v-text-field>
             <v-select v-model="age" :items="items" :rules="[v => !!v || 'Item is required']" label="나이" required ></v-select>
             <v-btn :disabled="!valid" large block color="primary" @click="signup()">회원가입</v-btn>
           </v-form>
@@ -30,6 +30,10 @@ export default {
     return {
       valid: true,
       email: null,
+      emailRules: [
+        v => !!v || 'E-mail is required',
+        v => /.+@.+[.].+/.test(v) || 'E-mail must be valid'
+      ],
       password: null,
       pwRules: [
         v => !!v || 'Password is required',
@@ -40,22 +44,21 @@ export default {
         v => !!v || 'Name is required',
         v => (v && v.length <= 10) || 'Name must be less than 10 characters'
       ],
-      emailRules: [
-        v => !!v || 'E-mail is required',
-        v => /.+@.+[.].+/.test(v) || 'E-mail must be valid'
-      ],
+      age: null,
       select: null,
       items: []
     };
   },
   mounted () {
-    for (let i = 10; i < 40; i++) this.items.push(i)
+    for (let i = 10; i <= 50; i++) this.items.push(i)
   },
   methods: {
     signup() {
       axios.post("http://localhost:3000/api/user", {
           email: this.email,
-          password: this.password
+          password: this.password,
+          name: this.name,
+          age: this.age
       })
       .then(r => {
         if (r.data.success) {
