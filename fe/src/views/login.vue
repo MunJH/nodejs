@@ -42,7 +42,7 @@ export default {
       if (selectUser) {
         if (selectUser.password == this.password) {
           alert("로그인 완료.");
-          location.replace("/");
+          this.$router.push("/");
         } else {
           alert("이메일과 비밀번호가 일치하지 않습니다.");
         }
@@ -52,7 +52,7 @@ export default {
       // 그 유저의 비밀번호와 입력된 비밀번호를 비교한다.
     },
     gotoSignup() {
-      location.replace("signup");
+      this.$router.push("signup");
     },
     getUsers() {
       axios
